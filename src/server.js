@@ -59,9 +59,29 @@ app.post('/api/simplex', (req, res) => {
 
 app.post('/api/saw', (req, res) => {
     try {
-        res.json({ result: "Análisis SAW en desarrollo" });
+        // Guardar input en archivo temporal
+        const input = JSON.stringify(req.body);
+        const inputFile = path.join(__dirname, 'temp_saw_input.json');
+        const outputFile = path.join(__dirname, 'resultado_saw.txt');
+        require('fs').writeFileSync(inputFile, input);
+
+        // Ejecutar el programa C#
+        const sawPath = path.join(__dirname, 'algorithms', 'saw', 'bin', 'Release', 'net6.0', 'win-x64', 'SAW.exe');
+        exec(`"${sawPath}" < "${inputFile}" > "${outputFile}"`, (error, stdout, stderr) => {
+            if (error) {
+                console.error('Error ejecutando SAW:', error);
+                res.status(500).send(stderr);
+                return;
+            }
+            
+            // Leer y enviar resultado
+            const resultado = require('fs').readFileSync(outputFile, 'utf8');
+            res.setHeader('Content-Type', 'text/plain');
+            res.send(resultado);
+        });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Error en el endpoint SAW:', error);
+        res.status(500).send(error.message);
     }
 });
 

@@ -29,13 +29,30 @@
         </div>
 
         <div class="algorithm-section" id="saw-section">
-            <h2>Análisis de Rutas Alternativas</h2>
+            <h2>Análisis de Rutas Alternativas (SAW)</h2>
             <p class="section-description">Evalúa diferentes rutas considerando tiempo, costo y eficiencia.</p>
             <div class="input-area">
-                <textarea id="saw-matrix" placeholder="Matriz de evaluación de rutas"></textarea>
-                <input type="text" id="saw-weights" placeholder="Pesos de criterios (tiempo, costo, distancia)">
-                <input type="text" id="saw-benefit" placeholder="Criterios a maximizar/minimizar (true/false)">
-                <button onclick="runSAW()">Analizar Rutas</button>
+                <div class="saw-config">
+                    <label>Número de Alternativas: <input type="number" id="saw-alternatives" min="1" value="3"></label>
+                    <label>Número de Criterios: <input type="number" id="saw-criteria" min="1" value="3"></label>
+                    <button onclick="generateSAWInputs()">Generar Campos</button>
+                </div>
+                
+                <div id="saw-form" class="saw-form">
+                    <!-- Matriz de decisión -->
+                    <h3>Matriz de Decisión</h3>
+                    <div id="decision-matrix"></div>
+
+                    <!-- Pesos de los criterios -->
+                    <h3>Pesos de los Criterios</h3>
+                    <div id="weights-inputs"></div>
+
+                    <!-- Tipo de criterio (Beneficio/Costo) -->
+                    <h3>Tipo de Criterio</h3>
+                    <div id="benefit-inputs"></div>
+                </div>
+                
+                <button onclick="runSAW()">Calcular SAW</button>
             </div>
             <div class="result-area" id="saw-result"></div>
         </div>

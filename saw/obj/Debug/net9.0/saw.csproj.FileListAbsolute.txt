@@ -1,0 +1,15 @@
+C:\Figue\saw\bin\Debug\net9.0\saw.exe
+C:\Figue\saw\bin\Debug\net9.0\saw.deps.json
+C:\Figue\saw\bin\Debug\net9.0\saw.runtimeconfig.json
+C:\Figue\saw\bin\Debug\net9.0\saw.dll
+C:\Figue\saw\bin\Debug\net9.0\saw.pdb
+C:\Figue\saw\obj\Debug\net9.0\saw.GeneratedMSBuildEditorConfig.editorconfig
+C:\Figue\saw\obj\Debug\net9.0\saw.AssemblyInfoInputs.cache
+C:\Figue\saw\obj\Debug\net9.0\saw.AssemblyInfo.cs
+C:\Figue\saw\obj\Debug\net9.0\saw.csproj.CoreCompileInputs.cache
+C:\Figue\saw\obj\Debug\net9.0\saw.sourcelink.json
+C:\Figue\saw\obj\Debug\net9.0\saw.dll
+C:\Figue\saw\obj\Debug\net9.0\refint\saw.dll
+C:\Figue\saw\obj\Debug\net9.0\saw.pdb
+C:\Figue\saw\obj\Debug\net9.0\saw.genruntimeconfig.cache
+C:\Figue\saw\obj\Debug\net9.0\ref\saw.dll

@@ -115,4 +115,55 @@ button:hover {
     font-size: 0.9em;
     margin-bottom: 15px;
     font-style: italic;
+}
+
+/* Estilos para la sección SAW */
+.saw-config {
+    margin-bottom: 20px;
+}
+
+.saw-config label {
+    margin-right: 15px;
+}
+
+.decision-matrix {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+}
+
+.decision-matrix th,
+.decision-matrix td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.matrix-input {
+    width: 80px;
+    padding: 5px;
+}
+
+.weights-container,
+.benefit-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.weight-input,
+.benefit-input {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.weight-input input {
+    width: 80px;
+}
+
+.benefit-input select {
+    width: 100px;
+    padding: 5px;
 } 

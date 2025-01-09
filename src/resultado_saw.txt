@@ -1,0 +1,35 @@
+PROCESO DE ANµLISIS SAW (Simple Additive Weighting)
+================================================
+
+Matriz de Decisi¢n Original:
+      C1        C2        
+A1     500.0000 8.0000   
+A2     300.0000 7.0000   
+A3     400.0000 9.0000   
+
+Proceso de Normalizaci¢n:
+
+Criterio 1:
+M ximo: 500.0000, M¡nimo: 300.0000
+Tipo: Beneficio
+
+Criterio 2:
+M ximo: 9.0000, M¡nimo: 7.0000
+Tipo: Beneficio
+
+Matriz Normalizada:
+      C1        C2        
+A1     1.0000   0.8889   
+A2     0.6000   0.7778   
+A3     0.8000   1.0000   
+
+Pesos de los Criterios:
+W1: 0.6000
+W2: 0.4000
+
+Puntuaciones Finales:
+Alternativa 1: 0.9556
+Alternativa 2: 0.6711
+Alternativa 3: 0.8800
+
+MEJOR ALTERNATIVA: Alternativa 1 con puntuaci¢n 0.9556

@@ -1,0 +1,2 @@
+C:\Figue\src\algorithms\saw\bin\Release\net6.0\win-x64\publish\SAW.pdb
+C:\Figue\src\algorithms\saw\bin\Release\net6.0\win-x64\publish\SAW.exe

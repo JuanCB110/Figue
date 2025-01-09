@@ -1,0 +1,5 @@
+C:\Figue\src\algorithms\saw\obj\Debug\net6.0\win-x64\SAW.GeneratedMSBuildEditorConfig.editorconfig
+C:\Figue\src\algorithms\saw\obj\Debug\net6.0\win-x64\SAW.AssemblyInfoInputs.cache
+C:\Figue\src\algorithms\saw\obj\Debug\net6.0\win-x64\SAW.AssemblyInfo.cs
+C:\Figue\src\algorithms\saw\obj\Debug\net6.0\win-x64\SAW.csproj.CoreCompileInputs.cache
+C:\Figue\src\algorithms\saw\obj\Debug\net6.0\win-x64\SAW.sourcelink.json
