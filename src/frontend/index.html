@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Optimización Logística</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Sistema de Optimización de Rutas y Paquetería</h1>
+        
+        <div class="algorithm-section" id="simplex-section">
+            <h2>Optimización de Recursos de Envío</h2>
+            <p class="section-description">Optimiza la asignación de recursos como vehículos, combustible y personal.</p>
+            <div class="input-area">
+                <div class="simplex-config">
+                    <label>Variables de Recurso: <input type="number" id="simplex-vars" min="1" value="2"></label>
+                    <label>Restricciones Operativas: <input type="number" id="simplex-const" min="1" value="2"></label>
+                    <button onclick="generateSimplexInputs()">Generar Campos</button>
+                </div>
+                <div id="simplex-form" class="simplex-form">
+                    <div id="objective-function"></div>
+                    <div id="constraints"></div>
+                </div>
+                <button onclick="runSimplex()">Calcular Optimización</button>
+            </div>
+            <div class="result-area" id="simplex-result"></div>
+        </div>
+
+        <div class="algorithm-section" id="saw-section">
+            <h2>Análisis de Rutas Alternativas</h2>
+            <p class="section-description">Evalúa diferentes rutas considerando tiempo, costo y eficiencia.</p>
+            <div class="input-area">
+                <textarea id="saw-matrix" placeholder="Matriz de evaluación de rutas"></textarea>
+                <input type="text" id="saw-weights" placeholder="Pesos de criterios (tiempo, costo, distancia)">
+                <input type="text" id="saw-benefit" placeholder="Criterios a maximizar/minimizar (true/false)">
+                <button onclick="runSAW()">Analizar Rutas</button>
+            </div>
+            <div class="result-area" id="saw-result"></div>
+        </div>
+
+        <div class="algorithm-section" id="datamining-section">
+            <h2>Análisis de Patrones de Envío</h2>
+            <p class="section-description">Identifica patrones en volúmenes de envío y demanda por zonas.</p>
+            <div class="input-area">
+                <textarea id="datamining-input" placeholder="Datos históricos de envíos"></textarea>
+                <input type="number" id="clusters" placeholder="Número de zonas a analizar">
+                <button onclick="runDataMining()">Analizar Patrones</button>
+            </div>
+            <div class="result-area" id="datamining-result"></div>
+        </div>
+
+        <div class="algorithm-section" id="neural-section">
+            <h2>Predicción de Demanda</h2>
+            <p class="section-description">Predice volúmenes de envío futuros basado en datos históricos.</p>
+            <div class="input-area">
+                <textarea id="neural-training" placeholder="Datos históricos de demanda"></textarea>
+                <textarea id="neural-expected" placeholder="Demanda real observada"></textarea>
+                <input type="number" id="epochs" placeholder="Ciclos de entrenamiento">
+                <button onclick="runNeural()">Generar Predicción</button>
+            </div>
+            <div class="result-area" id="neural-result"></div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html> 
