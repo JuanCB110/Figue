@@ -119,9 +119,44 @@ app.post('/api/datamining', (req, res) => {
 
 app.post('/api/neural', (req, res) => {
     try {
-        res.json({ result: "Predicción de demanda en desarrollo" });
+        const input = JSON.stringify(req.body);
+        console.log('JSON enviado al Perceptron:', input);
+        
+        const inputFile = path.join(__dirname, 'temp_neural_input.json');
+        const outputFile = path.join(__dirname, 'resultado_perceptron.txt');
+        require('fs').writeFileSync(inputFile, input);
+
+        // Rutas absolutas para Java
+        const javaPath = 'java';
+        const neuralPath = path.join(__dirname, 'algorithms', 'neural');
+        const classPath = path.join(neuralPath, 'target', 'classes');
+        const libPath = path.join(neuralPath, 'lib', 'gson-2.8.9.jar');
+        
+        // Asegurarse de que el separador sea correcto para Windows
+        const classSeparator = process.platform === 'win32' ? ';' : ':';
+        const fullClassPath = `${classPath}${classSeparator}${libPath}`;
+
+        console.log('Ejecutando Java desde:', neuralPath);
+        console.log('Con classpath:', fullClassPath);
+        
+        const command = `cd "${neuralPath}" && ${javaPath} -cp "${fullClassPath}" Perceptron < "${inputFile}" > "${outputFile}"`;
+        console.log('Comando completo:', command);
+        
+        exec(command, (error, stdout, stderr) => {
+            if (error) {
+                console.error('Error ejecutando Perceptron:', error);
+                console.error('Stderr:', stderr);
+                res.status(500).send(stderr);
+                return;
+            }
+            
+            res.setHeader('Content-Type', 'text/plain');
+            res.setHeader('Content-Disposition', 'attachment; filename=resultado_perceptron.txt');
+            res.sendFile(outputFile);
+        });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Error en el endpoint neural:', error);
+        res.status(500).send(error.message);
     }
 });
 

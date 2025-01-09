@@ -203,4 +203,50 @@ button:hover {
 .data-input {
     width: 80px;
     padding: 5px;
+}
+
+/* Estilos para la sección del Perceptron */
+.neural-config {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.neural-config label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.neural-config input {
+    width: 80px;
+    padding: 5px;
+}
+
+.training-matrix {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+}
+
+.training-matrix th,
+.training-matrix td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.neural-input {
+    width: 80px;
+    padding: 5px;
+}
+
+.expected-outputs {
+    margin: 15px 0;
+}
+
+.expected-output {
+    display: inline-block;
+    margin-right: 15px;
 } 

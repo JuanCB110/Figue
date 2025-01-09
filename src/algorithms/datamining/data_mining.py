@@ -38,11 +38,41 @@ class DataMiningAnalysis:
         pca = PCA(n_components=2)
         reduced_data = pca.fit_transform(scaled_data)
         
-        return {
-            'clusters': clusters.tolist(),
-            'centroids': kmeans.cluster_centers_.tolist(),
-            'reduced_data': reduced_data.tolist()
-        }
+        # Crear reporte formateado
+        report = []
+        report.append("ANÁLISIS DE PATRONES DE ENVÍO")
+        report.append("=" * 40)
+        report.append("\nDatos de entrada:")
+        report.append("-" * 20)
+        report.append(str(self.data))
+        
+        report.append("\nResultados del Clustering:")
+        report.append("-" * 25)
+        report.append(f"Número de clusters: {n_clusters}")
+        
+        # Mostrar asignación de clusters
+        report.append("\nAsignación de clusters:")
+        for i, cluster in enumerate(clusters):
+            report.append(f"Registro {i+1}: Cluster {cluster + 1}")
+        
+        # Mostrar centroides
+        report.append("\nCentroides de los clusters:")
+        centroids_df = pd.DataFrame(
+            kmeans.cluster_centers_,
+            columns=[f'Variable {i+1}' for i in range(self.data.shape[1])]
+        )
+        report.append(str(centroids_df))
+        
+        # Análisis por cluster
+        report.append("\nAnálisis por cluster:")
+        for i in range(n_clusters):
+            cluster_data = self.data[clusters == i]
+            report.append(f"\nCluster {i+1}:")
+            report.append(f"Número de registros: {len(cluster_data)}")
+            report.append("Estadísticas descriptivas:")
+            report.append(str(cluster_data.describe()))
+        
+        return "\n".join(report)
 
 if __name__ == "__main__":
     try:
@@ -52,8 +82,9 @@ if __name__ == "__main__":
         analyzer = DataMiningAnalysis(input_data['data'])
         results = analyzer.analyze(input_data.get('n_clusters', 3))
         
-        # Enviar resultados como JSON
-        print(json.dumps(results))
+        # Imprimir resultados formateados
+        print(results)
+        
     except Exception as e:
-        print(json.dumps({'error': str(e)}), file=sys.stderr)
+        print(f"Error en el análisis: {str(e)}", file=sys.stderr)
         sys.exit(1) 

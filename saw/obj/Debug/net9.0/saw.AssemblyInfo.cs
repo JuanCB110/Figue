@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("saw")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5087fa8ec8143ee7e5f7ab95af447e9cc327bc60")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e7ae7a56801443bd3ecb40df3e09713974d7b939")]
 [assembly: System.Reflection.AssemblyProductAttribute("saw")]
 [assembly: System.Reflection.AssemblyTitleAttribute("saw")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -82,10 +82,22 @@
             <h2>Predicción de Demanda</h2>
             <p class="section-description">Predice volúmenes de envío futuros basado en datos históricos.</p>
             <div class="input-area">
-                <textarea id="neural-training" placeholder="Datos históricos de demanda"></textarea>
-                <textarea id="neural-expected" placeholder="Demanda real observada"></textarea>
-                <input type="number" id="epochs" placeholder="Ciclos de entrenamiento">
-                <button onclick="runNeural()">Generar Predicción</button>
+                <div class="neural-config">
+                    <label>Número de Variables de Entrada: <input type="number" id="input-vars" min="1" value="2"></label>
+                    <label>Número de Ejemplos: <input type="number" id="training-examples" min="1" value="4"></label>
+                    <label>Épocas de Entrenamiento: <input type="number" id="epochs" min="1" value="1000"></label>
+                    <button onclick="generateNeuralInputs()">Generar Campos</button>
+                </div>
+                
+                <div id="neural-form" class="neural-form">
+                    <h3>Datos de Entrenamiento</h3>
+                    <div id="training-matrix"></div>
+                    
+                    <h3>Salidas Esperadas</h3>
+                    <div id="expected-outputs"></div>
+                </div>
+                
+                <button onclick="runNeural()">Entrenar Red</button>
             </div>
             <div class="result-area" id="neural-result"></div>
         </div>

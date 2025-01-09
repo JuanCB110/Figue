@@ -1,0 +1,26 @@
+ENTRENAMIENTO DEL PERCEPTRON
+==========================
+
+Datos de entrenamiento:
+Ejemplo 1: [2.50, 50.00] -> 0
+Ejemplo 2: [1.00, 150.00] -> 1
+Ejemplo 3: [3.00, 30.00] -> 0
+Ejemplo 4: [0.50, 200.00] -> 1
+
+Iniciando entrenamiento...
+Época 100: Error = 0.0000
+Época 200: Error = 0.0000
+Época 300: Error = 0.0000
+Época 400: Error = 0.0000
+Época 500: Error = 0.0000
+Época 600: Error = 0.0000
+Época 700: Error = 0.0000
+Época 800: Error = 0.0000
+Época 900: Error = 0.0000
+Época 1000: Error = 0.0000
+
+Entrenamiento completado
+Pesos finales: [-15.6243, 0.6117]
+Bias final: -4.1602
+
+{"error":0.0,"weights":[-15.624302788599687,0.6117131527677913],"bias":-4.16017092841018}

@@ -101,26 +101,76 @@ async function runDataMining() {
     });
 }
 
-async function runNeural() {
-    try {
-        const trainingData = JSON.parse(document.getElementById('neural-training').value);
-        const expectedOutputs = JSON.parse(document.getElementById('neural-expected').value);
-        const epochs = parseInt(document.getElementById('epochs').value);
-        
-        const response = await fetch(`${API_URL}/neural`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ trainingData, expectedOutputs, epochs })
-        });
-        
-        const data = await response.json();
-        document.getElementById('neural-result').innerHTML = 
-            `<pre>${JSON.stringify(data.result, null, 2)}</pre>`;
-    } catch (error) {
-        alert('Error al ejecutar Red Neuronal: ' + error.message);
+function runNeural() {
+    const inputVars = parseInt(document.getElementById('input-vars').value);
+    const examples = parseInt(document.getElementById('training-examples').value);
+    const epochs = parseInt(document.getElementById('epochs').value);
+    
+    // Recopilar datos de entrenamiento
+    let trainingData = [];
+    for(let i = 0; i < examples; i++) {
+        let row = [];
+        for(let j = 0; j < inputVars; j++) {
+            let value = parseFloat(document.getElementById(`train_${i}_${j}`).value) || 0;
+            row.push(value);
+        }
+        trainingData.push(row);
     }
+    
+    // Recopilar salidas esperadas
+    let expectedOutputs = [];
+    for(let i = 0; i < examples; i++) {
+        let value = parseInt(document.getElementById(`expected_${i}`).value) || 0;
+        expectedOutputs.push(value);
+    }
+
+    console.log('Datos de entrenamiento:', trainingData);
+    console.log('Salidas esperadas:', expectedOutputs);
+
+    // Llamar al servicio
+    fetch(`${API_URL}/neural`, {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            trainingData: trainingData,
+            expectedOutputs: expectedOutputs,
+            epochs: epochs
+        })
+    })
+    .then(response => response.blob())
+    .then(blob => {
+        // Crear link de descarga
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'resultado_perceptron.txt';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+        
+        // También mostrar en la interfaz
+        blob.text().then(text => {
+            document.getElementById('neural-result').innerHTML = `
+                <h3>Resultados del Entrenamiento:</h3>
+                <pre style="background-color: #f5f5f5; padding: 10px; border-radius: 5px;">
+                    ${text}
+                </pre>
+                <p>El resultado se ha descargado como 'resultado_perceptron.txt'</p>
+            `;
+        });
+    })
+    .catch(error => {
+        document.getElementById('neural-result').innerHTML = `
+            <h3>Error:</h3>
+            <pre style="color: red; background-color: #fff0f0; padding: 10px; border-radius: 5px;">
+                ${error}
+            </pre>
+        `;
+        console.error('Error:', error);
+    });
 }
 
 function generateSimplexInputs() {
@@ -404,4 +454,42 @@ function runDataMining() {
         `;
         console.error('Error:', error);
     });
+} 
+
+function generateNeuralInputs() {
+    const inputVars = parseInt(document.getElementById('input-vars').value);
+    const examples = parseInt(document.getElementById('training-examples').value);
+    
+    // Generar matriz de entrenamiento
+    let matrixHTML = '<table class="training-matrix">';
+    
+    // Encabezados
+    matrixHTML += '<tr><th>Ejemplo</th>';
+    for(let j = 0; j < inputVars; j++) {
+        matrixHTML += `<th>Variable ${j+1}</th>`;
+    }
+    matrixHTML += '</tr>';
+    
+    // Filas de datos
+    for(let i = 0; i < examples; i++) {
+        matrixHTML += `<tr><td>E${i+1}</td>`;
+        for(let j = 0; j < inputVars; j++) {
+            matrixHTML += `<td><input type="number" step="0.01" id="train_${i}_${j}" class="neural-input"></td>`;
+        }
+        matrixHTML += '</tr>';
+    }
+    matrixHTML += '</table>';
+    document.getElementById('training-matrix').innerHTML = matrixHTML;
+
+    // Generar campos para salidas esperadas
+    let outputsHTML = '<div class="expected-outputs">';
+    for(let i = 0; i < examples; i++) {
+        outputsHTML += `
+            <div class="expected-output">
+                <label>E${i+1}:</label>
+                <input type="number" min="0" max="1" step="1" id="expected_${i}" class="neural-input">
+            </div>`;
+    }
+    outputsHTML += '</div>';
+    document.getElementById('expected-outputs').innerHTML = outputsHTML;
 } 
