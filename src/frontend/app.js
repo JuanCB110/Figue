@@ -42,24 +42,63 @@ async function runSAW() {
 }
 
 async function runDataMining() {
-    try {
-        const data = JSON.parse(document.getElementById('datamining-input').value);
-        const n_clusters = parseInt(document.getElementById('clusters').value);
-        
-        const response = await fetch(`${API_URL}/datamining`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ data, n_clusters })
-        });
-        
-        const result = await response.json();
-        document.getElementById('datamining-result').innerHTML = 
-            `<pre>${JSON.stringify(result.result, null, 2)}</pre>`;
-    } catch (error) {
-        alert('Error al ejecutar Minería de Datos: ' + error.message);
+    const rows = parseInt(document.getElementById('data-rows').value);
+    const cols = parseInt(document.getElementById('data-cols').value);
+    const nClusters = parseInt(document.getElementById('n-clusters').value);
+    
+    // Recopilar datos
+    let data = [];
+    for(let i = 0; i < rows; i++) {
+        let row = [];
+        for(let j = 0; j < cols; j++) {
+            row.push(parseFloat(document.getElementById(`data_${i}_${j}`).value));
+        }
+        data.push(row);
     }
+
+    // Llamar al servicio
+    fetch(`${API_URL}/datamining`, {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            data: data,
+            n_clusters: nClusters
+        })
+    })
+    .then(response => response.blob())
+    .then(blob => {
+        // Crear link de descarga
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'resultado_datamining.txt';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+        
+        // También mostrar en la interfaz
+        blob.text().then(text => {
+            document.getElementById('datamining-result').innerHTML = `
+                <h3>Resultados del Análisis:</h3>
+                <pre style="background-color: #f5f5f5; padding: 10px; border-radius: 5px;">
+                    ${text}
+                </pre>
+                <p>El resultado se ha descargado como 'resultado_datamining.txt'</p>
+            `;
+        });
+    })
+    .catch(error => {
+        document.getElementById('datamining-result').innerHTML = `
+            <h3>Error:</h3>
+            <pre style="color: red; background-color: #fff0f0; padding: 10px; border-radius: 5px;">
+                ${error}
+            </pre>
+        `;
+        console.error('Error:', error);
+    });
 }
 
 async function runNeural() {
@@ -278,5 +317,91 @@ function runSAW() {
                 ${error}
             </pre>
         `;
+    });
+} 
+
+function generateDataMiningInputs() {
+    const rows = parseInt(document.getElementById('data-rows').value);
+    const cols = parseInt(document.getElementById('data-cols').value);
+    
+    // Generar matriz de datos
+    let matrixHTML = '<table class="data-matrix">';
+    
+    // Encabezados
+    matrixHTML += '<tr><th>Registro</th>';
+    for(let j = 0; j < cols; j++) {
+        matrixHTML += `<th>Variable ${j+1}</th>`;
+    }
+    matrixHTML += '</tr>';
+    
+    // Filas de datos
+    for(let i = 0; i < rows; i++) {
+        matrixHTML += `<tr><td>R${i+1}</td>`;
+        for(let j = 0; j < cols; j++) {
+            matrixHTML += `<td><input type="number" step="0.01" id="data_${i}_${j}" class="data-input"></td>`;
+        }
+        matrixHTML += '</tr>';
+    }
+    matrixHTML += '</table>';
+    document.getElementById('data-matrix').innerHTML = matrixHTML;
+}
+
+function runDataMining() {
+    const rows = parseInt(document.getElementById('data-rows').value);
+    const cols = parseInt(document.getElementById('data-cols').value);
+    const nClusters = parseInt(document.getElementById('n-clusters').value);
+    
+    // Recopilar datos
+    let data = [];
+    for(let i = 0; i < rows; i++) {
+        let row = [];
+        for(let j = 0; j < cols; j++) {
+            row.push(parseFloat(document.getElementById(`data_${i}_${j}`).value));
+        }
+        data.push(row);
+    }
+
+    // Llamar al servicio
+    fetch(`${API_URL}/datamining`, {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            data: data,
+            n_clusters: nClusters
+        })
+    })
+    .then(response => response.blob())
+    .then(blob => {
+        // Crear link de descarga
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'resultado_datamining.txt';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+        
+        // También mostrar en la interfaz
+        blob.text().then(text => {
+            document.getElementById('datamining-result').innerHTML = `
+                <h3>Resultados del Análisis:</h3>
+                <pre style="background-color: #f5f5f5; padding: 10px; border-radius: 5px;">
+                    ${text}
+                </pre>
+                <p>El resultado se ha descargado como 'resultado_datamining.txt'</p>
+            `;
+        });
+    })
+    .catch(error => {
+        document.getElementById('datamining-result').innerHTML = `
+            <h3>Error:</h3>
+            <pre style="color: red; background-color: #fff0f0; padding: 10px; border-radius: 5px;">
+                ${error}
+            </pre>
+        `;
+        console.error('Error:', error);
     });
 } 

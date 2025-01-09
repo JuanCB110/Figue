@@ -166,4 +166,41 @@ button:hover {
 .benefit-input select {
     width: 100px;
     padding: 5px;
+}
+
+/* Estilos para la sección de Minería de Datos */
+.datamining-config {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.datamining-config label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.datamining-config input {
+    width: 80px;
+    padding: 5px;
+}
+
+.data-matrix {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+}
+
+.data-matrix th,
+.data-matrix td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.data-input {
+    width: 80px;
+    padding: 5px;
 } 

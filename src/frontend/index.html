@@ -61,8 +61,18 @@
             <h2>Análisis de Patrones de Envío</h2>
             <p class="section-description">Identifica patrones en volúmenes de envío y demanda por zonas.</p>
             <div class="input-area">
-                <textarea id="datamining-input" placeholder="Datos históricos de envíos"></textarea>
-                <input type="number" id="clusters" placeholder="Número de zonas a analizar">
+                <div class="datamining-config">
+                    <label>Número de Registros: <input type="number" id="data-rows" min="1" value="3"></label>
+                    <label>Número de Variables: <input type="number" id="data-cols" min="1" value="3"></label>
+                    <label>Número de Clusters: <input type="number" id="n-clusters" min="2" value="3"></label>
+                    <button onclick="generateDataMiningInputs()">Generar Campos</button>
+                </div>
+                
+                <div id="datamining-form" class="datamining-form">
+                    <h3>Datos de Envíos</h3>
+                    <div id="data-matrix"></div>
+                </div>
+                
                 <button onclick="runDataMining()">Analizar Patrones</button>
             </div>
             <div class="result-area" id="datamining-result"></div>

@@ -87,9 +87,33 @@ app.post('/api/saw', (req, res) => {
 
 app.post('/api/datamining', (req, res) => {
     try {
-        res.json({ result: "Análisis de patrones en desarrollo" });
+        const input = JSON.stringify(req.body);
+        const inputFile = path.join(__dirname, 'temp_datamining_input.json');
+        const outputFile = path.join(__dirname, 'resultado_datamining.txt');
+        require('fs').writeFileSync(inputFile, input);
+
+        // Usar la ruta completa de Python (ajusta según tu sistema)
+        const pythonPath = 'C:\\Users\\JuanCB\\AppData\\Local\\Programs\\Python\\Python312\\python.exe';
+        const scriptPath = path.join(__dirname, 'algorithms', 'datamining', 'data_mining.py');
+        
+        console.log('Ejecutando Python desde:', pythonPath);
+        console.log('Script path:', scriptPath);
+        
+        exec(`"${pythonPath}" "${scriptPath}" < "${inputFile}" > "${outputFile}"`, (error, stdout, stderr) => {
+            if (error) {
+                console.error('Error ejecutando análisis de datos:', error);
+                console.error('Stderr:', stderr);
+                res.status(500).send(stderr);
+                return;
+            }
+            
+            res.setHeader('Content-Type', 'text/plain');
+            res.setHeader('Content-Disposition', 'attachment; filename=resultado_datamining.txt');
+            res.sendFile(outputFile);
+        });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Error en el endpoint de minería de datos:', error);
+        res.status(500).send(error.message);
     }
 });
 

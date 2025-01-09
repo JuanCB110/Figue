@@ -1,10 +1,25 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import sys
+import os
 import json
-import pandas as pd
-import numpy as np
-from sklearn.preprocessing import StandardScaler
-from sklearn.cluster import KMeans
-from sklearn.decomposition import PCA
+
+# Agregar el path del entorno virtual si es necesario
+python_path = os.path.dirname(sys.executable)
+if python_path not in sys.path:
+    sys.path.append(python_path)
+
+try:
+    import pandas as pd
+    import numpy as np
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.cluster import KMeans
+    from sklearn.decomposition import PCA
+except ImportError as e:
+    print(f"Error importando módulos: {e}", file=sys.stderr)
+    print(f"Python path: {sys.path}", file=sys.stderr)
+    sys.exit(1)
 
 class DataMiningAnalysis:
     def __init__(self, data):
